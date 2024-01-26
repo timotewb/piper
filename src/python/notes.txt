@@ -1,0 +1,20 @@
+python -m piper_train.preprocess \
+  --language en-us \
+  --input-dir /mnt/ns01/users/timotewb/Data/twb_voice_training_2023_00_raw/ \
+  --output-dir /mnt/ns01/users/timotewb/Data/twb_voice_training_2023_01_train/ \
+  --dataset-format ljspeech \
+  --single-speaker \
+  --sample-rate 22050
+
+
+python -m piper_train \
+    --dataset-dir /mnt/ns01/users/timotewb/Data/twb_voice_training_2023_01_train/ \
+    --devices 1 \
+    --accelerator 'gpu' \
+    --batch-size 22 \
+    --validation-split 0.0 \
+    --num-test-examples 0 \
+    --max_epochs 10000 \
+    --resume_from_checkpoint /mnt/ns01/users/timotewb/Data/checkpoints/piper/en/en_GB/northern_english_male/medium/epoch=9029-step=2261720.ckpt \
+    --checkpoint-epochs 10 \
+    --precision 32
